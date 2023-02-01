@@ -4,18 +4,27 @@
 
 ## Commandes
 
-### Run project
+### Start project
 
 1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/)
 2. Run `docker compose build --pull --no-cache` to build fresh images
 3. Run `docker compose up` (the logs will be displayed in the current shell) or Run `docker compose up -d` to run in background
-4. Let's go 🚀 `https://localhost:443`
+4. Run `npm install` to install javascript dependencies
+5. Let's go : [`https://localhost:443`](https://localhost:443)
 
 ### Stop project
 
 1. Run `docker compose down --remove-orphans` to stop the Docker containers.
 
-## Commits rules
+## Issue name rules
+
+- **[BUILD]** : _Changes that affect the build system or external dependencies_
+- **[CI]** : _Changes to our CI configuration files and scripts_
+- **[DOCS]** : _Documentation only changes_
+- **[FEATURE]** : _A new feature issue_
+- **[BUG]** : _A bug issue_
+
+## Commit message rules
 
 - **build** : _Changes that affect the build system or external dependencies_
 - **ci** : _Changes to our CI configuration files and scripts_
