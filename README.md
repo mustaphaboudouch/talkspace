@@ -1,12 +1,28 @@
-# Symfony Docker (PHP8 / Caddy / Postgresql)
+# TalkSpace
 
-A [Docker](https://www.docker.com/)-based installer and runtime for the [Symfony](https://symfony.com) web framework, with full [HTTP/2](https://symfony.com/doc/current/weblink.html), HTTP/3 and HTTPS support.
+**TalkSpace** is an online solution designed to make it easy for patients to schedule therapy sessions.
 
-## Getting Started
+## Commandes
+
+### Run project
 
 1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/)
 2. Run `docker compose build --pull --no-cache` to build fresh images
 3. Run `docker compose up` (the logs will be displayed in the current shell) or Run `docker compose up -d` to run in background
-4. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
-5. Run `docker compose down --remove-orphans` to stop the Docker containers.
-6. Run `docker compose logs -f` to display current logs, `docker compose logs -f [CONTAINER_NAME]` to display specific container's current logs
+4. Let's go 🚀 `https://localhost:443`
+
+### Stop project
+
+1. Run `docker compose down --remove-orphans` to stop the Docker containers.
+
+## Commits rules
+
+- **build** : _Changes that affect the build system or external dependencies_
+- **ci** : _Changes to our CI configuration files and scripts_
+- **docs** : _Documentation only changes_
+- **feat** : _A new feature_
+- **fix** : _A bug fix_
+- **perf** : _A code change that improves performance_
+- **refactor** : _A code change that neither fixes a bug nor adds a feature_
+- **style** : _Changes that do not affect the meaning of the code_
+- **test** : _Adding missing tests or correcting existing tests_
