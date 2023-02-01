@@ -1,3 +1,22 @@
-<nav>
-    <h1>Test Navbar</h1>
+<nav class="navbar navbar-expand-lg navbar-light" style="justify-content: flex-end; background-color: #444444">
+    <a class="navbar-brand ml-2 text-white logo-btn" style="left: 2rem; position: absolute;" href="#">
+        {#            <img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt="">#}
+        Your logo
+    </a>
+    <ul class="navbar-nav mr-2">
+        <li class="nav-item">
+            <a class="nav-link text-white" style="margin-right: 2rem;" href="#">Doctor</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" style="margin-right: 2rem;" href="#">Help</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" style="margin-right: 2rem;" href="#">About</a>
+        </li>
+    </ul>
+    {% if not app.user %}
+        <form class="form-inline">
+            <a class="btn btn-outline-light my-2 my-sm-0 login-btn" style="margin-right: 2rem; border-radius: 30px" href="#">Se connecter</a>
+        </form>
+    {% endif %}
 </nav>
