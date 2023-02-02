@@ -3,7 +3,7 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <form method="post">
+    <form class="mx-auto" style="width: 50%; margin-top:50px;" method="post">
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
@@ -14,33 +14,52 @@
             </div>
         {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="inputEmail">Email</label>
-        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-        <label for="inputPassword">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+<div class="d-flex" >
+<h3 class="mb-3 font-weight-normal">Se connecter</h3>
+</div>
+        <hr>
+    <div class="row">
+  <div class="col">
+       <label for="inputEmail">Email</label>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+  </div>
 
-        <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"
-        >
+  <div class="col">
+    <label for="inputPassword">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+  </div>
+    </div>
 
-        {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
+     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
 
-        <div class="checkbox mb-3">
+  
+<br><hr>
+
+ <div class="d-flex">
+ <div class="col">
+  <button class="btn btn-lg btn-primary sign-in-btn" type="submit">
+            Sign in
+        </button>
+
+        <button class="btn btn-lg btn-primary register-btn">
+            Register
+        </button>
+    </div>
+           <div class="col text-right">
+            <p><a href="{{ path('app_forgot_password_request') }}"> Mot de passe oublié <a/></p>
+        </div>
+  </div>
+     
+<div class="row text-center">
+     
+        </div>
+
+           <div class="checkbox mb-3">
             <label>
                 <input type="checkbox" name="_remember_me"> Remember me
             </label>
         </div>
-        #}
-
-        <button class="btn btn-lg btn-primary sign-in-btn" type="submit">
-            Sign in
-        </button>
-        <button class="btn btn-lg btn-primary register-btn">
-            Register
-        </button>
+        
         <script>
             const signInButton = document.querySelector('.sign-in-btn');
             signInButton.addEventListener('click', (event) => {
