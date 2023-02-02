@@ -3,7 +3,8 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <form class="mx-auto" style="width: 50%; margin-top:50px;" method="post">
+   <div class="container my-5 mx-auto " style="max-width:600px">
+    
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
@@ -13,6 +14,8 @@
                 You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
             </div>
         {% endif %}
+
+<form class="bg-light" style="max-width:600px">
 
 <div class="d-flex" >
 <h3 class="mb-3 font-weight-normal">Se connecter</h3>
@@ -50,10 +53,6 @@
         </div>
   </div>
      
-<div class="row text-center">
-     
-        </div>
-
            <div class="checkbox mb-3">
             <label>
                 <input type="checkbox" name="_remember_me"> Remember me
@@ -76,4 +75,6 @@
             });
         </script>
     </form>
+    </div>
+
 {% endblock %}
