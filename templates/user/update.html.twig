@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création/Modification d'un user!{% endblock %}
+
+{% block body %}
+    <div class="container mt-auto" style="width:50%; margin:0 auto;">
+        <h2 class="text-center mb-3">Modifier un utilisateur</h2>
+        {{ form_start(form, {'attr': {'class': 'form-group'}}) }}
+        {{ form_widget(form, {'attr': {'class': 'form-control'}}) }}
+        <input type="submit" value="Modifier" class="btn btn-primary mt-2">
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

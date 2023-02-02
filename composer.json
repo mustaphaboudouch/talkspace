@@ -44,6 +44,8 @@
 		"symfony/web-link": "6.1.*",
 		"symfony/webpack-encore-bundle": "^1.16",
 		"symfony/yaml": "6.1.*",
+		"symfonycasts/reset-password-bundle": "^1.16",
+		"symfonycasts/verify-email-bundle": "^1.13",
 		"twig/extra-bundle": "^2.12|^3.0",
 		"twig/twig": "^2.12|^3.0"
 	},
@@ -100,6 +102,7 @@
 		}
 	},
 	"require-dev": {
+		"doctrine/doctrine-fixtures-bundle": "^3.4",
 		"phpunit/phpunit": "^9.5",
 		"symfony/browser-kit": "6.1.*",
 		"symfony/css-selector": "6.1.*",

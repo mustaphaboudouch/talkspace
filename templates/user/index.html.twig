@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listes des Hackathons!{% endblock %}
+
+{% block body %}
+    <br>
+
+    <div style="width:50%; margin:0 auto;">
+        <form method="GET" class="d-flex justify-content" >
+            <div class="form-group mr-3" style="margin-right: 1rem">
+                <input type="text" value="{{ app.request.query.get('query') }}" name="query" placeholder="Recherche..." class="form-control">
+            </div>
+            <div class="form-group mr-3" style="margin-right: 1rem">
+                <select name="limit" class="form-control">
+                    <option value="">Tous les users</option>
+                    <option value="5" {% if app.request.query.get('limit') == 5 %}selected{% endif %}>5</option>
+                    <option value="10" {% if app.request.query.get('limit') == 10 %}selected{% endif %}>10</option>
+                    <option value="15" {% if app.request.query.get('limit') == 15 %}selected{% endif %}>15</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Rechercher!</button>
+        </form>
+    </div>
+
+    <div style="width:50%; margin:0 auto;">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.roles|join(', ') }}</td>
+                    <td>
+                        <a href="{{ path('app_user_update', {'id': user.id}) }}">Edit</a>
+                        <a href="{{ path('app_user_remove', {'id': user.id, 'token': csrf_token('remove' ~ user.id)}) }}">Remove</a>
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+{% endblock %}
