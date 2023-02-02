@@ -19,11 +19,11 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light" style="justify-content: flex-end; background-color: #444444">
-    <a class="navbar-brand ml-2 text-white logo-btn" style="left: 2rem; position: absolute;" href="#">
+    <a class="navbar-brand ml-2 text-white logo-btn" style="left: 2rem; position: absolute;" href="{{ path('app_home') }}">
         {#            <img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt="">#}
         Your logo
     </a>
-    <ul class="navbar-nav mr-2">
+    <ul class="navbar-nav mr-2" style="justify-content: flex-end">
         <li class="nav-item">
             <a class="nav-link text-white" style="margin-right: 2rem;" href="#">Doctor</a>
         </li>
@@ -33,10 +33,20 @@
         <li class="nav-item">
             <a class="nav-link text-white" style="margin-right: 2rem;" href="#">About</a>
         </li>
+        {% if app.user and is_granted('ROLE_ADMIN') %}
+        <li class="nav-item">
+            <a class="nav-link text-white" style="margin-right: 2rem;" href="{{ path('app_user_index') }}">Admin</a>
+        </li>
+        {% endif %}
     </ul>
     {% if not app.user %}
         <form class="form-inline">
-            <a class="btn btn-outline-light my-2 my-sm-0 login-btn" style="margin-right: 2rem; border-radius: 30px" href="#">Se connecter</a>
+            <a class="btn btn-outline-light my-2 my-sm-0 login-btn" style="margin-right: 2rem; border-radius: 30px" href="{{ path('app_login') }}">Se connecter</a>
+        </form>
+    {% endif %}
+    {% if app.user %}
+        <form class="form-inline">
+            <a class="btn btn-outline-light my-2 my-sm-0 logout-btn" style="margin-right: 2rem; border-radius: 30px" href="{{ path('app_logout') }}">Deconnecter</a>
         </form>
     {% endif %}
 </nav>
@@ -48,21 +58,6 @@
         <p class="text-center text-white">fb ig twitter | info@app-bot.fr</p>
     </div>
 </footer>
-
-<script>
-    const loginButton = document.querySelector('.login-btn');
-
-    loginButton.addEventListener('click', (event) => {
-        event.preventDefault();
-        window.location.href = '{{ path('app_login') }}';
-    });
-
-    const logoButton = document.querySelector('.logo-btn');
-    logoButton.addEventListener('click',(event) => {
-        event.preventDefault();
-        window.location.href = '{{ path('app_home') }}';
-    })
-</script>
 {% block body %}{% endblock %}
 </body>
 </html>

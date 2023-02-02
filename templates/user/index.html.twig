@@ -39,13 +39,8 @@
                     <td>{{ user.email }}</td>
                     <td>{{ user.roles|join(', ') }}</td>
                     <td>
-{#                        <a href="{{ path('user_show', {'id': user.id}) }}">Show</a>#}
-{#                        <a href="{{ path('user_update', {'id': user.id}) }}">Edit</a>#}
-{#                        <a href="{{ path('user_remove', {'id': user.id, 'token': csrf_token('remove' ~ user.id)}) }}">Remove</a>#}
-                        <a>Show</a>
-                        <a>Edit</a>
-                        <a>Remove</a>
-
+                        <a href="{{ path('app_user_update', {'id': user.id}) }}">Edit</a>
+                        <a href="{{ path('app_user_remove', {'id': user.id, 'token': csrf_token('remove' ~ user.id)}) }}">Remove</a>
 
                     </td>
                 </tr>
