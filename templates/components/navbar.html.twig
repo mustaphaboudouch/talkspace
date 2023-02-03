@@ -1,22 +1,33 @@
-<nav class="navbar navbar-expand-lg navbar-light" style="justify-content: flex-end; background-color: #444444">
-    <a class="navbar-brand ml-2 text-white logo-btn" style="left: 2rem; position: absolute;" href="#">
-        {#            <img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt="">#}
-        Your logo
-    </a>
-    <ul class="navbar-nav mr-2">
-        <li class="nav-item">
-            <a class="nav-link text-white" style="margin-right: 2rem;" href="#">Doctor</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-white" style="margin-right: 2rem;" href="#">Help</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-white" style="margin-right: 2rem;" href="#">About</a>
-        </li>
-    </ul>
-    {% if not app.user %}
-        <form class="form-inline">
-            <a class="btn btn-outline-light my-2 my-sm-0 login-btn" style="margin-right: 2rem; border-radius: 30px" href="#">Se connecter</a>
-        </form>
-    {% endif %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{{ path('app_home') }}">TalkSpace</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-lg-4">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Trouver un thérapeute</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">À propos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Aide</a>
+                </li>
+            </ul>
+            <div class="d-flex flex-column flex-lg-row gap-3">
+                {% if not app.user %}
+                    <a class="btn btn-outline-light" href="{{ path('app_login') }}">S'identifier</a>
+                    <a class="btn btn-light" href="{{ path('app_register') }}">S'inscrire</a>
+                {% endif %}
+                {% if app.user %}
+                    <a class="btn btn-outline-light" href="{{ path('app_logout') }}">Déconnecter</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="btn btn-light" href="{{ path('app_user_index') }}">Admin</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </nav>

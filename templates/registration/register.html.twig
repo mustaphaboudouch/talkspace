@@ -1,21 +1,43 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/auth.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Talkspace - S'inscrire{% endblock %}
 
-{% block body %}
+{% block form %}
     {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        <div class="alert alert-danger d-flex gap-3" role="alert">
+            <i class="bi bi-exclamation-circle-fill"></i>
+            <p class="mb-0">{{ flash_error }}</p>
+        </div>
     {% endfor %}
 
-    <h1>Register</h1>
+    <h1>S'inscrire</h1>
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        {# TODO: implement firstname & lastname in register controller #}
+        <div class="d-flex flex-column flex-lg-row gap-3 mt-3">
+            <div class="flex-grow-1">
+                <label for="firstname">Prénom</label>
+                <input type="text" name="firstname" id="firstname" class="form-control" required>
+            </div>
+            <div class="flex-grow-1">
+                <label for="lastname">Nom</label>
+                <input type="text" name="lastname" id="lastname" class="form-control" required>
+            </div>
+        </div>
+        <div class="mt-3">
+            {{ form_row(registrationForm.email, { label: 'Adresse e-mail' }) }}
+        </div>
+        <div class="mt-3">
+            {{ form_row(registrationForm.plainPassword, { label: 'Mot de passe' }) }}
+        </div>
+        <div class="form-check mt-3">
+            {{ form_row(registrationForm.agreeTerms, { label: 'Je suis d\'accord avec la politique de confidentialité' }) }}
+        </div>
 
-        <button type="submit" class="btn btn-lg btn-primary">Register</button>
+        <div class="d-flex align-items-center mt-4">
+            <button type="submit" class="btn btn-primary">S'inscrire</button>
+            <span class="ms-3">ou</span>
+            <a class="btn btn-link" href="{{ path('app_login') }}">Connecter-vous</a>
+        </div>
     {{ form_end(registrationForm) }}
 {% endblock %}
