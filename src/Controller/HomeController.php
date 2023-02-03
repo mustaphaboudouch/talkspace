@@ -19,4 +19,10 @@ class HomeController extends AbstractController
     {
         return $this->render('home/privacy.html.twig');
     }
+
+    #[Route('/terms', name: 'app_home')]
+    public function terms(): Response
+    {
+        return $this->render('home/terms-services.html.twig');
+    }
 }
