@@ -1,0 +1,22 @@
+{
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": true,
+    "prettier.useTabs": true,
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "all",
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "html.format.contentUnformatted": "",
+    "intelephense.files.associations": ["*.php", "*.phtml"],
+    "[php]": {
+        "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+        "editor.formatOnSave": true
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "yaml.schemas": {
+        "file:///Users/mustaphaboudouch/.vscode/extensions/atlassian.atlascode-2.10.12/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+    }
+}
