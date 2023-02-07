@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    S'identifier
+    TalkSpace - S'identifier
 {% endblock %}
 
 {% block body %}
@@ -20,19 +20,19 @@
             name="_csrf_token"
             value="{{ csrf_token('authenticate') }}" />
 
-        <label for="inputEmail">Email</label>
-        <input type="email"
+        <label for="email">Adresse e-mail</label>
+        <input id="email"
+            type="email"
             value="{{ last_username }}"
             name="email"
-            id="inputEmail"
             autocomplete="email"
             required
             autofocus />
 
-        <label for="inputPassword">Password</label>
-        <input type="password"
+        <label for="password">Mot de passe</label>
+        <input id="password"
+            type="password"
             name="password"
-            id="inputPassword"
             autocomplete="current-password"
             required />
 

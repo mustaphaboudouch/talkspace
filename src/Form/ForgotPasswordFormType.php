@@ -14,12 +14,15 @@ class ForgotPasswordFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'attr' => ['autocomplete' => 'email'],
+                'attr' => [
+                    'autocomplete' => 'email',
+                ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter your email',
+                        'message' => 'Veuillez entrer votre adresse e-mail.',
                     ]),
                 ],
+                'label' => 'Adresse e-mail',
             ]);
     }
 
