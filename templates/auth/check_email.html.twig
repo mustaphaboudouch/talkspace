@@ -5,15 +5,17 @@
 {% endblock %}
 
 {% block body %}
+    <h1 class="text-2xl font-bold">
+        E-mail de réinitialisation envoyé
+    </h1>
+
     <p>
         Si un compte correspondant à votre adresse e-mail existe, un e-mail
         vient d'être envoyé qui contient un lien que vous pouvez utiliser pour
-        réinitialiser votre mot de passe. Ce lien expirera dans {{
-            resetToken.expirationMessageKey|trans(
-                resetToken.expirationMessageData,
-                'ResetPasswordBundle'
-            )
-        }}.
+        réinitialiser votre mot de passe.
+    </p>
+    <p>
+        Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}
     </p>
     <p>
         Si vous ne recevez pas un e-mail, veuillez vérifier votre dossier de
