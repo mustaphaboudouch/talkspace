@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    TalkSpace - Profil
+{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('error') %}
+        <div role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <h1 class="text-2xl font-bold">
+        Profil
+    </h1>
+
+    <h3 class="text-xl font-bold">
+        Informations personnelles
+    </h3>
+
+    {{ form_start(profilePersonalForm) }}
+    {{ form_widget(profilePersonalForm) }}
+    <button type="submit">Enregistrer</button>
+    {{ form_end(profilePersonalForm) }}
+
+    <h3 class="text-xl font-bold">
+        Mise à jour du mot de passe
+    </h3>
+
+    {{ form_start(profilePasswordForm) }}
+    {{ form_widget(profilePasswordForm) }}
+    <button type="submit">Enregistrer</button>
+    {{ form_end(profilePasswordForm) }}
+
+    <h3 class="text-xl font-bold">
+        Supprimer votre compte
+    </h3>
+
+    {{ form_start(profileDeleteForm) }}
+    {{ form_widget(profileDeleteForm) }}
+    <button type="submit">Supprimer</button>
+    {{ form_end(profileDeleteForm) }}
+{% endblock %}
