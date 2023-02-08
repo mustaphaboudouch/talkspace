@@ -5,6 +5,12 @@
 {% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('success') %}
+        <div role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <h1 class="text-2xl font-bold">
         Page d'accueil
     </h1>

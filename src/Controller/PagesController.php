@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Form\ContactFormType;
+use App\Repository\ContactRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,6 +21,25 @@ class PagesController extends AbstractController
     public function about(): Response
     {
         return $this->render('pages/about.html.twig');
+    }
+
+    #[Route('/support', name: 'app_support', methods: ['GET', 'POST'])]
+    public function contact(Request $request, ContactRepository $contactRepository): Response
+    {
+        $contactForm = $this->createForm(ContactFormType::class);
+        $contactForm->handleRequest($request);
+
+        if ($contactForm->isSubmitted() && $contactForm->isValid()) {
+            $contact = $contactForm->getData();
+            $contactRepository->save($contact, true);
+
+            $this->addFlash('success', 'Votre message a bien été envoyé.');
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('pages/support.html.twig', [
+            'contactForm' => $contactForm->createView(),
+        ]);
     }
 
     #[Route('/privacy-policy', name: 'app_privacy_policy')]
