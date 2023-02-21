@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    TalkSpace - Centre d'aide
+{% endblock %}
+
+{% block body %}
+    <h1 class="text-2xl font-bold">
+        Modifier le message
+    </h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button>Modifier</button>
+    {{ form_end(form) }}
+{% endblock %}

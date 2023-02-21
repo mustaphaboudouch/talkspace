@@ -54,6 +54,7 @@ security:
         - { path: ^/profile, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/settings, roles: ROLE_DOCTOR }
         # - { path: ^/admin/users, roles: ROLE_ADMIN }
+        # - { path: ^/admin/support, roles: ROLE_ADMIN }
 
 when@test:
     security:

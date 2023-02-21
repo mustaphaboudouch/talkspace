@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    TalkSpace - Centre d'aide
+{% endblock %}
+
+{% block body %}
+    <h1 class="text-2xl font-bold">
+        Centre d'aide
+    </h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Prénom
+                </th>
+                <th>
+                    Nom
+                </th>
+                <th>
+                    Adresse e-mail
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contact in contacts %}
+                <tr>
+                    <td>
+                        {{ contact.firstname }}
+                    </td>
+                    <td>
+                        {{ contact.lastname }}
+                    </td>
+                    <td>
+                        {{ contact.email }}
+                    </td>
+                    <td>
+                        <a href="{{
+                            path(
+                                'app_admin_support_show',
+                                {
+                                    id: contact.id
+                                }
+                            )
+                            }}">
+                            Voir
+                        </a>
+                        <a href="{{
+                            path(
+                                'app_admin_support_edit',
+                                {
+                                    id: contact.id
+                                }
+                            )
+                            }}">
+                            Modifier
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">
+                        Pas de messages
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
