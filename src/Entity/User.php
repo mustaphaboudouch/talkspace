@@ -43,9 +43,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private array $roles = [];
+    private string $role = 'ROLE_PATIENT';
 
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isActive = false;
 
     #[ORM\OneToOne(inversedBy: 'doctor', cascade: ['persist', 'remove'])]
     private ?Account $account = null;
@@ -179,6 +183,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function isActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(?bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
     /**
      * A visual identifier that represents this user.
      *
@@ -190,20 +206,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * Make sure that user can have only one role
+     *
      * @see UserInterface
      */
+
+    public function getRole(): string
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_PATIENT';
+
+        return $roles[0];
+    }
+
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_PATIENT';
 
-        return array_unique($roles);
+        return array_slice($roles, 0, 1);
     }
 
     public function setRoles(array $roles): self
     {
-        $this->roles = $roles;
+        $this->roles = array_slice($roles, 0, 1);
 
         return $this;
     }

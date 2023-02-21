@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230208180310 extends AbstractMigration
+final class Version20230221213034 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,9 +20,16 @@ final class Version20230208180310 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('CREATE SEQUENCE account_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE appointment_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE contact_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE day_off_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE file_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE period_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE reset_password_request_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE schedule_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE service_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE "user_id_seq" INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE TABLE account (id INT NOT NULL, description TEXT DEFAULT NULL, experience VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE appointment (id INT NOT NULL, patient_id INT NOT NULL, doctor_id INT NOT NULL, service_id INT NOT NULL, date DATE NOT NULL, start_time VARCHAR(5) NOT NULL, end_time VARCHAR(5) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_FE38F8446B899279 ON appointment (patient_id)');
@@ -46,7 +53,7 @@ final class Version20230208180310 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_5A3811FB87F4FB17 ON schedule (doctor_id)');
         $this->addSql('CREATE TABLE service (id INT NOT NULL, doctor_id INT NOT NULL, name VARCHAR(255) NOT NULL, duration INT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_E19D9AD287F4FB17 ON service (doctor_id)');
-        $this->addSql('CREATE TABLE "user" (id INT NOT NULL, account_id INT DEFAULT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, email VARCHAR(180) NOT NULL, is_verified BOOLEAN NOT NULL, profile_picture VARCHAR(255) DEFAULT NULL, phone_number VARCHAR(10) DEFAULT NULL, social_number VARCHAR(255) DEFAULT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE "user" (id INT NOT NULL, account_id INT DEFAULT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, email VARCHAR(180) NOT NULL, is_verified BOOLEAN NOT NULL, profile_picture VARCHAR(255) DEFAULT NULL, phone_number VARCHAR(10) DEFAULT NULL, social_number VARCHAR(255) DEFAULT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, is_active BOOLEAN DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649E7927C74 ON "user" (email)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D6499B6B5FBA ON "user" (account_id)');
         $this->addSql('CREATE TABLE messenger_messages (id BIGSERIAL NOT NULL, body TEXT NOT NULL, headers TEXT NOT NULL, queue_name VARCHAR(190) NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, available_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, delivered_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');
@@ -78,9 +85,16 @@ final class Version20230208180310 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
+        $this->addSql('DROP SEQUENCE account_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE appointment_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE contact_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE day_off_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE file_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE period_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE reset_password_request_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE schedule_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE service_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE "user_id_seq" CASCADE');
         $this->addSql('ALTER TABLE appointment DROP CONSTRAINT FK_FE38F8446B899279');
         $this->addSql('ALTER TABLE appointment DROP CONSTRAINT FK_FE38F84487F4FB17');
         $this->addSql('ALTER TABLE appointment DROP CONSTRAINT FK_FE38F844ED5CA9E6');
