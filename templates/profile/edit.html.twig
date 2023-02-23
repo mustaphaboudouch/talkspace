@@ -25,6 +25,10 @@
         Informations personnelles
     </h3>
 
+    <img src="{{ asset('uploads/profile/' ~ user.profilePicture) }}"
+        width="100"
+        height="100" />
+
     {{ form_start(profilePersonalForm) }}
     {{ form_widget(profilePersonalForm) }}
     <button type="submit">Enregistrer</button>

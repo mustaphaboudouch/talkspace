@@ -137,7 +137,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getProfilePicture(): ?string
     {
-        return $this->profilePicture;
+        $picture = 'profile_picture_placeholder.png';
+
+        if ($this->profilePicture) {
+            $picture = $this->profilePicture;
+        }
+
+        return $picture;
     }
 
     public function setProfilePicture(?string $profilePicture): self

@@ -7,11 +7,13 @@ use App\Form\ProfilePasswordFormType;
 use App\Form\ProfilePersonalFormType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ProfileController extends AbstractController
 {
@@ -19,7 +21,8 @@ class ProfileController extends AbstractController
     public function edit(
         Request $request,
         UserRepository $userRepository,
-        UserPasswordHasherInterface $passwordHasher
+        UserPasswordHasherInterface $passwordHasher,
+        SluggerInterface $slugger
     ): Response {
         $user = $this->getUser();
 
@@ -35,6 +38,25 @@ class ProfileController extends AbstractController
         // personal infos form
         if ($personalForm->isSubmitted() && $personalForm->isValid()) {
             $user = $personalForm->getData();
+
+            $profilePictureFile = $personalForm->get('profilePicture')->getData();
+            if ($profilePictureFile) {
+                // generate new unique filename
+                $originalFilename = pathinfo($profilePictureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $profilePictureFile->guessExtension();
+                // move the file to `profile_pictures_directory` directory
+                try {
+                    $profilePictureFile->move(
+                        $this->getParameter('profile_pictures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('error', 'Erreur lors du téléchargement de la photo de profil..');
+                }
+                $user->setProfilePicture($newFilename);
+            }
+
             $userRepository->save($user, true);
 
             $this->addFlash('success', 'Votre informations personnelles ont bien été modifiées.');
@@ -58,7 +80,6 @@ class ProfileController extends AbstractController
                 $session = new Session();
                 $session->invalidate();
 
-                // TODO: add flash message
                 return $this->redirectToRoute('app_login');
             }
 
@@ -76,7 +97,6 @@ class ProfileController extends AbstractController
                 $session = new Session();
                 $session->invalidate();
 
-                // TODO: add flash message
                 return $this->redirectToRoute('app_home');
             }
 
@@ -85,9 +105,11 @@ class ProfileController extends AbstractController
         }
 
         return $this->renderForm('profile/edit.html.twig', [
+            'user' => $user,
             'profilePersonalForm' => $personalForm,
             'profilePasswordForm' => $passwordForm,
             'profileDeleteForm' => $deleteForm,
+
         ]);
     }
 }
