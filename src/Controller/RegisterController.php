@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Account;
+use App\Entity\Schedule;
 use App\Entity\User;
 use App\Form\RegisterFormType;
 use App\Security\EmailVerifier;
@@ -44,6 +46,18 @@ class RegisterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($user->getRole() === 'ROLE_DOCTOR') {
+                // add doctor account
+                $account = new Account();
+                $account->setDescription(null);
+                $account->setExperience(null);
+
+                $entityManager->persist($account);
+                $entityManager->flush();
+
+                $user->setAccount($account);
+            }
+
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -55,6 +69,19 @@ class RegisterController extends AbstractController
             // persist user
             $entityManager->persist($user);
             $entityManager->flush();
+
+            // add doctor schedule
+            if ($user->getRole() === 'ROLE_DOCTOR') {
+                $days = array('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY');
+                foreach ($days as $day) {
+                    $schedule = new Schedule();
+                    $schedule->setDay($day);
+                    $schedule->setDoctor($user);
+
+                    $entityManager->persist($schedule);
+                    $entityManager->flush();
+                }
+            }
 
             // send verification email
             $this->emailVerifier->sendEmailConfirmation(

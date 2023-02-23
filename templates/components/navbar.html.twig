@@ -4,6 +4,9 @@
         {% if app.user %}
             <a href="{{ path('app_dashboard') }}">Dashboard</a>
             <a href="{{ path('app_profile') }}">Profil</a>
+            {% if is_granted('ROLE_DOCTOR') %}
+                <a href="{{ path('app_doctor_settings') }}">Paramètres</a>
+            {% endif %}
             <a href="{{ path('app_logout') }}">Déconnecter</a>
         {% else %}
             <a href="{{ path('app_login') }}">S'identifier</a>
