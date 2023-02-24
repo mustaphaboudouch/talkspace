@@ -15,10 +15,5 @@
         Page d'accueil
     </h1>
 
-    {% if app.user %}
-        <a href="{{ path('app_dashboard') }}">Dashboard</a>
-    {% else %}
-        <a href="{{ path('app_login') }}">S'identifier</a>
-        <a href="{{ path('app_register') }}">S'inscrire</a>
-    {% endif %}
+    <a href="{{ path('app_doctor_index') }}">Trouver un thérapeute</a>
 {% endblock %}
