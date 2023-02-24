@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\AccountRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,9 +12,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class DoctorController extends AbstractController
 {
     #[Route('/doctors', name: 'app_doctor_index', methods: ['GET'])]
-    public function index(): Response
+    public function index(UserRepository $userRepository, AccountRepository $accountRepository): Response
     {
-        return $this->render('doctors/index.html.twig');
+
+        return $this->render('doctors/index.html.twig', [
+            'users' => $userRepository->findAll(),
+            'accounts' => $accountRepository->findAll(),
+        ]);
     }
 
     #[Route('/doctors/{id}', name: 'app_doctor_show', methods: ['GET'])]

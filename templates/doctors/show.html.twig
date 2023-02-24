@@ -9,7 +9,40 @@
         Thérapeute
     </h1>
 
-    <p>
+    <h2>
         therapist infos here
-    </p>
+    </h2>
+
+     <h2> Therapiste content </h2>
+        {% if user.account  %}
+            {% for role in user.roles  %}
+                {% if role == "ROLE_DOCTOR"  %}
+            <table class="border-collapse border border-slate-500 ..."> 
+                    <tr>
+                        <th> Prénom </th>
+                        <th> Nom </th>
+                        <th> Email </th>
+                        <th> Photo de profil </th> 
+                        <th> Mobile </th>
+                        <th> Numéro de sécurité sociale </th>
+                        <th> Description </th>
+                        <th> Expérience </th>
+                    </tr>
+                    <tr>
+                        <td> {{user.firstname}} </td>
+                        <td> {{user.lastname}} </td>
+                        <td> {{user.email}} </td>
+                        <td> {{user.profilePicture}} </td> 
+                        <td> {{user.phoneNumber}} </td>
+                        <td> {{user.socialNumber}} </td>
+                        <td> {{user.account.description }} </td>
+                        <td> {{user.account.experience }}</td>
+                    </tr>
+     
+            </table>
+                     {% endif %}
+                {% endfor %}
+         {% endif %}
+   
+
 {% endblock %}
