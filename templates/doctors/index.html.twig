@@ -9,7 +9,31 @@
         Trouver un thérapeute
     </h1>
 
-    <p>
-        therapists list here
-    </p>
+    <h2> Therapists list here </h2>
+    {% for user in users %}
+        {% if user.account  %}
+            {% for role in user.roles  %}
+                {% if role == "ROLE_DOCTOR"  %}
+            <table>                
+                    <tr>
+                        <th> Prénom </th>
+                        <th> Nom </th>
+                        <th> Description </th>
+                        <th> Expérience </th>
+                    </tr>
+                    <tr>
+                        <td> {{user.firstname}} </td>
+                        <td> {{user.lastname}} </td>
+
+                        <td> {{ user.account.description }} </td>
+                        <td>  {{ user.account.experience }}</td>
+                    </tr>
+            </table>
+                     {% endif %}
+                {% endfor %}
+         {% endif %}
+    {% endfor %}
+
+    <button type="submit">Booking button</button>
+ 
 {% endblock %}
