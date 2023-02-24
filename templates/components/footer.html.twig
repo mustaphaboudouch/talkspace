@@ -1,13 +1,26 @@
-<footer style="border:1px solid #000000;">
-    <a href="{{ path('app_home') }}">TalkSpace</a>
-    <nav>
-        <a href="{{ path('app_about') }}">À propos</a>
-        <a href="{{ path('app_support') }}">Centre d'aide</a>
-        <a href="{{ path('app_privacy_policy') }}">
+<footer class="flex flex-col items-center gap-5 border-t border-gray-200 bg-white py-10">
+    <a href="{{ path('app_home') }}" class="text-2xl font-bold">
+        <span class="text-indigo-600">Talk</span>Space.
+    </a>
+    <nav class="flex items-center gap-6 text-indigo-600">
+        <a href="{{ path('app_about') }}"
+            class="whitespace-nowrap hover:underline">
+            À propos
+        </a>
+        <a href="{{ path('app_support') }}"
+            class="whitespace-nowrap hover:underline">
+            Centre d'aide
+        </a>
+        <a href="{{ path('app_privacy_policy') }}"
+            class="whitespace-nowrap hover:underline">
             Politique de confidentialité
         </a>
-        <a href="{{ path('app_terms_of_service') }}">
+        <a href="{{ path('app_terms_of_service') }}"
+            class="whitespace-nowrap hover:underline">
             Conditions d'utilisation
         </a>
     </nav>
+    <p class="text-sm text-gray-600">
+        &copy; TalkSpace. All rights reserved.
+    </p>
 </footer>
