@@ -53,6 +53,7 @@ security:
         - { path: ^/dashboard, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/profile, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/doctor/settings, roles: ROLE_DOCTOR }
+        - { path: ^/doctor/services, roles: ROLE_DOCTOR }
         # - { path: ^/admin/users, roles: ROLE_ADMIN }
         # - { path: ^/admin/support, roles: ROLE_ADMIN }
 

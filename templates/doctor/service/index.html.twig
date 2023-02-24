@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    TalkSpace - Services
+{% endblock %}
+
+{% block body %}
+    <h1 class="text-2xl font-bold">
+        Services
+    </h1>
+
+    <a href="{{ path('app_doctor_service_new') }}">Ajouter une service</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Nom
+                </th>
+                <th>
+                    Durée
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for service in services %}
+                <tr>
+                    <td>
+                        {{ service.name }}
+                    </td>
+                    <td>
+                        {{ service.duration }}
+                    </td>
+                    <td>
+                        <a href="{{
+                            path(
+                                'app_doctor_service_edit',
+                                {
+                                    id: service.id
+                                }
+                            )
+                            }}">
+                            Modifier
+                        </a>
+                        <form method="POST"
+                            action="{{
+                            path(
+                                'app_doctor_service_delete',
+                                {
+                                    id: service.id
+                                }
+                            )
+                            }}"
+                            onsubmit="return confirm('Are you sure you want to delete this item?');">
+                            <input type="hidden"
+                                name="_token"
+                                value="{{
+                                csrf_token(
+                                    'delete' ~ service.id
+                                )
+                                }}" />
+                            <button class="btn">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">
+                        Pas de services
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

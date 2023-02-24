@@ -23,12 +23,10 @@ class SettingsController extends AbstractController
     #[Route('/doctor/settings', name: 'app_doctor_settings')]
     public function index(
         Request $request,
-        EntityManagerInterface $entityManager,
         AccountRepository $accountRepository,
         DayOffRepository $dayOffRepository,
         UserRepository $userRepository,
         PeriodRepository $periodRepository,
-        ScheduleRepository $scheduleRepository,
     ): Response {
         $user = $this->getUser();
 

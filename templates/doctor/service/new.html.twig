@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    TalkSpace - Ajouter une service
+{% endblock %}
+
+{% block body %}
+    <h1 class="text-2xl font-bold">
+        Ajouter une service
+    </h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button>Enregistrer</button>
+    {{ form_end(form) }}
+{% endblock %}
