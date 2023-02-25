@@ -27,6 +27,7 @@ class SupportController extends AbstractController
     public function show(
         Request $request,
         Contact $contact,
+        ContactRepository $contactRepository,
         MailerInterface $mailer,
     ): Response {
         $form = $this->createForm(ResponseFormType::class);
@@ -36,6 +37,7 @@ class SupportController extends AbstractController
             $subject = $form->get('subject')->getData();
             $response = $form->get('response')->getData();
 
+            // send response email
             $email = (new TemplatedEmail())
                 ->from(new Address('support@talkspace.fr', 'TalkSpace'))
                 ->to($contact->getEmail())
@@ -45,6 +47,9 @@ class SupportController extends AbstractController
                     'response' => $response,
                 ]);
             $mailer->send($email);
+
+            // delete message
+            $contactRepository->remove($contact, true);
 
             return $this->redirectToRoute('app_admin_support_index', [], Response::HTTP_SEE_OTHER);
         }
