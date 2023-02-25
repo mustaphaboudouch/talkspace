@@ -1,0 +1,33 @@
+<section>
+    <div class="mb-8 flex gap-4">
+        <h3 class="items-center whitespace-nowrap text-xl font-bold">
+            Informations de rendez-vous
+        </h3>
+        <span class="mt-4 w-full flex-1 bg-gray-300" style="height: 1px;">
+
+        </span>
+    </div>
+
+    <table class="w-full rounded-md border border-gray-300 bg-white">
+        <tbody>
+            <tr class="border-t border-gray-300">
+                <th class="p-4 text-left text-sm font-normal uppercase text-gray-500">
+                    Thérapeute
+                </th>
+                <td>
+                    {{ appointment.doctor.firstname }}
+                    {{ appointment.doctor.lastname }}
+                </td>
+            </tr>
+            <tr class="border-t border-gray-300">
+                <th class="p-4 text-left text-sm font-normal uppercase text-gray-500">
+                    Patient
+                </th>
+                <td>
+                    {{ appointment.patient.firstname }}
+                    {{ appointment.patient.lastname }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>

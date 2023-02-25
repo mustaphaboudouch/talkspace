@@ -52,7 +52,7 @@ class ProfileController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    $this->addFlash('error', 'Erreur lors du téléchargement de la photo de profil..');
+                    $this->addFlash('error', 'Erreur lors du téléchargement de la photo de profil.');
                 }
                 $user->setProfilePicture($newFilename);
             }

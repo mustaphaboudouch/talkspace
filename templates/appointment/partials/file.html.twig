@@ -1,0 +1,91 @@
+<section class="mt-8">
+    <div class="flex gap-4">
+        <h3 class="items-center whitespace-nowrap text-xl font-bold">
+            Fichiers
+        </h3>
+        <span class="mt-4 w-full flex-1 bg-gray-300" style="height: 1px;">
+
+        </span>
+    </div>
+
+    {{ form_start(appointmentFileForm) }}
+    <div class="mt-8 flex flex-col items-end gap-2 md:flex-row">
+        <div class="w-full flex-1">
+            {{ form_row(appointmentFileForm.name) }}
+        </div>
+        <div class="w-full flex-1">
+            {{ form_row(appointmentFileForm.file) }}
+        </div>
+        <div class="w-full md:w-24">
+            <button type="submit"
+                class="w-full rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                Ajouter
+            </button>
+        </div>
+    </div>
+    {{ form_end(appointmentFileForm) }}
+
+    <table class="mt-8 w-full rounded-md border border-gray-300 bg-white">
+        <thead class="rounded-md bg-gray-100">
+            <tr>
+                <th class="px-6 py-4 text-left text-sm font-normal uppercase text-gray-500">
+                    Nom de fichier
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in appointment.files %}
+                <tr class="border-t border-gray-300">
+                    <td class="px-6 py-4 text-sm">
+                        {{ file.name }}
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center justify-end gap-2">
+                            <a href="{{
+                                path(
+                                    'app_appointment_file_download',
+                                    {
+                                        id: file.id
+                                    }
+                                )
+                                }}"
+                                class="rounded-md border border-transparent bg-indigo-600 py-1 px-3 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                Télécharger
+                            </a>
+                            <form method="POST"
+                                action="{{
+                                path(
+                                    'app_appointment_file_delete',
+                                    {
+                                        id: file.id
+                                    }
+                                )
+                                }}"
+                                onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <input type="hidden"
+                                    name="_token"
+                                    value="{{
+                                    csrf_token(
+                                        'delete' ~ file.id
+                                    )
+                                    }}" />
+                                <button class="rounded-md border border-transparent bg-red-600 py-1 px-3 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                    Supprimer
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr class="border-t border-gray-300">
+                    <td colspan="4">
+                        <div class="flex items-center justify-center p-8 text-gray-500">
+                            Pas de fichiers
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>

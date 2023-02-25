@@ -1,0 +1,14 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}
+    TalkSpace - Rendez-vous
+{% endblock %}
+
+{% block body %}
+    <h1 class="mb-8 text-3xl font-bold">
+        Rendez-vous
+    </h1>
+
+    {% include 'appointment/partials/informations.html.twig' %}
+    {% include 'appointment/partials/file.html.twig' %}
+{% endblock %}

@@ -34,11 +34,11 @@ class DashboardController extends AbstractController
         if ($user->getRole() === 'ROLE_DOCTOR') {
             $patients = $userRepository->findAll();
             $services = $user->getServices();
-            $appointments = $appointmentRepository->findAll();
+            $appointments = $user->getAppointments();
         }
 
         if ($user->getRole() === 'ROLE_PATIENT') {
-            $appointments = $appointmentRepository->findAll();
+            $appointments = $user->getAppointments();
         }
 
         return $this->render('dashboard/index.html.twig', [
