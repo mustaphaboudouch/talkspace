@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PeriodRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PeriodRepository::class)]
@@ -13,11 +14,11 @@ class Period
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 5)]
-    private ?string $startTime = null;
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $startTime = null;
 
-    #[ORM\Column(length: 5)]
-    private ?string $endTime = null;
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $endTime = null;
 
     #[ORM\ManyToOne(inversedBy: 'periods')]
     #[ORM\JoinColumn(nullable: false)]
@@ -28,24 +29,24 @@ class Period
         return $this->id;
     }
 
-    public function getStartTime(): ?string
+    public function getStartTime(): ?\DateTimeInterface
     {
         return $this->startTime;
     }
 
-    public function setStartTime(string $startTime): self
+    public function setStartTime(\DateTimeInterface $startTime): self
     {
         $this->startTime = $startTime;
 
         return $this;
     }
 
-    public function getEndTime(): ?string
+    public function getEndTime(): ?\DateTimeInterface
     {
         return $this->endTime;
     }
 
-    public function setEndTime(string $endTime): self
+    public function setEndTime(\DateTimeInterface $endTime): self
     {
         $this->endTime = $endTime;
 
