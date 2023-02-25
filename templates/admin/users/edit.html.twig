@@ -34,9 +34,11 @@
         <div>
             {{ form_row(form.phoneNumber) }}
         </div>
-        <div>
-            {{ form_row(form.socialNumber) }}
-        </div>
+        {% if user.role == 'ROLE_PATIENT' %}
+            <div>
+                {{ form_row(form.socialNumber) }}
+            </div>
+        {% endif %}
         <div>
             {{ form_row(form.roles) }}
         </div>

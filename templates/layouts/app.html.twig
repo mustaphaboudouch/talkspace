@@ -22,6 +22,26 @@
             <div class="flex min-h-screen">
                 {% include 'components/sidebar.html.twig' %}
                 <main class="flex-1">
+                    {% if app.user and app.user.isVerified != true %}
+                        <div class="flex items-start gap-3 border-b border-gray-300 bg-red-200 p-4 text-sm text-red-700"
+                            role="alert">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="h-6 w-6 flex-none">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                            </svg>
+                            <span>
+                                Votre compte n'est pas activé, veuillez vérifier
+                                votre boîte de réception e-mail pour l'activer.
+                            </span>
+                        </div>
+                    {% endif %}
+
                     <div class="mx-auto w-11/12 py-8"
                         style="max-width: 1200px;">
                         {% for message in app.flashes('success') %}
