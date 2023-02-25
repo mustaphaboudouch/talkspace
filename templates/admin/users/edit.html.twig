@@ -7,7 +7,7 @@
 {% block body %}
     {{ form_start(form) }}
     <h1 class="text-2xl font-bold">
-        Modifier l'utilisateur
+        {{ user.firstname }} {{ user.lastname }}
     </h1>
 
     <div class="flex flex-col gap-2">
@@ -20,11 +20,19 @@
             {{ form_row(form.isActive) }}
             <span>Activé l'utilisateur</span>
         </label>
-        <div class="mt-4 flex flex-col items-center gap-2 md:flex-row">
+        <div class="mt-4 flex items-end gap-2">
             <div class="flex-1">
+                {{ form_row(form.roles) }}
+            </div>
+            <span class="rounded-md border border-gray-300 bg-gray-100 p-2 text-sm uppercase text-gray-500">
+                Rôle Actuele : {{ user.formattedRole }}
+            </span>
+        </div>
+        <div class="flex flex-col items-center gap-2 md:flex-row">
+            <div class="w-full flex-1">
                 {{ form_row(form.firstname) }}
             </div>
-            <div class="flex-1">
+            <div class="w-full flex-1">
                 {{ form_row(form.lastname) }}
             </div>
         </div>
@@ -34,16 +42,10 @@
         <div>
             {{ form_row(form.phoneNumber) }}
         </div>
-        {% if user.role == 'ROLE_PATIENT' %}
-            <div>
-                {{ form_row(form.socialNumber) }}
-            </div>
-        {% endif %}
         <div>
-            {{ form_row(form.roles) }}
+            {{ form_row(form.socialNumber) }}
         </div>
     </div>
-    {# {{ form_widget(form) }} #}
     <button type="submit"
         class="mt-4 rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
         Enregistrer

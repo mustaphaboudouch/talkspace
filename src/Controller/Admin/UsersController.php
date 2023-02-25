@@ -33,6 +33,9 @@ class UsersController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $role = $form->get('roles')->getData();
+            $user->setRoles([$role]);
+
             $profilePictureFile = $form->get('profilePicture')->getData();
             if ($profilePictureFile) {
                 // generate new unique filename

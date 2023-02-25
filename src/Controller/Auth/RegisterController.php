@@ -46,6 +46,16 @@ class RegisterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $role = $form->get('roles')->getData();
+            if ($role === 'ROLE_DOCTOR' || $role === 'ROLE_PATIENT') {
+                $user->setRoles([$role]);
+            } else {
+                $this->addFlash('alert', 'Le rôle saisi est invalide.');
+                return $this->render('auth/register.html.twig', [
+                    'registerForm' => $form->createView(),
+                ]);
+            }
+
             if ($user->getRole() === 'ROLE_DOCTOR') {
                 // add doctor account
                 $account = new Account();

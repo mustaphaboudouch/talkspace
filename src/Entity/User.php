@@ -225,6 +225,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $roles[0];
     }
 
+    public function getFormattedRole(): string
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_PATIENT';
+
+        switch ($roles[0]) {
+            case 'ROLE_ADMIN':
+                return 'Admin';
+            case 'ROLE_DOCTOR':
+                return 'Thérapeute';
+            case 'ROLE_PATIENT':
+            default:
+                return 'Patient';
+        }
+    }
+
     public function getRoles(): array
     {
         $roles = $this->roles;

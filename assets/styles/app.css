@@ -57,4 +57,7 @@ select {
     .sidebar-label {
         display: none;
     }
+    .navbar-user {
+        display: none;
+    }
 }
