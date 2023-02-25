@@ -31,12 +31,6 @@ class Appointment
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $date = null;
 
-    #[ORM\Column(length: 5)]
-    private ?string $startTime = null;
-
-    #[ORM\Column(length: 5)]
-    private ?string $endTime = null;
-
     #[ORM\OneToMany(mappedBy: 'appointment', targetEntity: File::class)]
     private Collection $files;
 
@@ -94,30 +88,6 @@ class Appointment
     public function setDate(\DateTimeImmutable $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getStartTime(): ?string
-    {
-        return $this->startTime;
-    }
-
-    public function setStartTime(string $startTime): self
-    {
-        $this->startTime = $startTime;
-
-        return $this;
-    }
-
-    public function getEndTime(): ?string
-    {
-        return $this->endTime;
-    }
-
-    public function setEndTime(string $endTime): self
-    {
-        $this->endTime = $endTime;
 
         return $this;
     }

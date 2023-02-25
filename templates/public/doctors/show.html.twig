@@ -22,5 +22,8 @@
         {{ doctor.account.description }}
     </p>
 
-    <a href="#">Prenez rendez-vous</a>
+    {{ form_start(appointmentForm) }}
+    {{ form_widget(appointmentForm) }}
+    <button type="submit">Prenez rendez-vous</button>
+    {{ form_end(appointmentForm) }}
 {% endblock %}

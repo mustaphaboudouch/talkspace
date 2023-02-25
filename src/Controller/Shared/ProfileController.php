@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Shared;
 
 use App\Form\ProfileDeleteFormType;
 use App\Form\ProfilePasswordFormType;
