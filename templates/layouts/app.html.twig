@@ -22,21 +22,24 @@
             <div class="flex">
                 {% include 'components/sidebar.html.twig' %}
                 <main class="flex-1">
-                    {% for message in app.flashes('success') %}
-                        <div role="alert">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
+                    <div class="mx-auto w-11/12 py-8"
+                        style="max-width: 1200px;">
+                        {% for message in app.flashes('success') %}
+                            <div role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
 
-                    {% for message in app.flashes('error') %}
-                        <div role="alert">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
+                        {% for message in app.flashes('error') %}
+                            <div role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
 
-                    {% block body %}
+                        {% block body %}
 
-                    {% endblock %}
+                        {% endblock %}
+                    </div>
                 </main>
             </div>
         </div>

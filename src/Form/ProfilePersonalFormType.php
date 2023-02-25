@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,6 +21,9 @@ class ProfilePersonalFormType extends AbstractType
                 'label' => false,
                 'mapped' => false,
                 'required' => false,
+                'attr' => [
+                    'class' => 'rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm',
+                ],
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',
@@ -34,6 +38,7 @@ class ProfilePersonalFormType extends AbstractType
             ->add('firstname', TextType::class, [
                 'attr' => [
                     'autocomplete' => 'given-name',
+                    'class' => 'rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm',
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -45,6 +50,7 @@ class ProfilePersonalFormType extends AbstractType
             ->add('lastname', TextType::class, [
                 'attr' => [
                     'autocomplete' => 'family-name',
+                    'class' => 'rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm',
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -53,8 +59,28 @@ class ProfilePersonalFormType extends AbstractType
                 ],
                 'label' => 'Nom',
             ])
-            ->add('phoneNumber')
-            ->add('socialNumber');
+            ->add('phoneNumber', NumberType::class, [
+                'attr' => [
+                    'class' => 'rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm',
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer votre numéro de téléphone.',
+                    ]),
+                ],
+                'label' => 'Numéro de téléphone',
+            ])
+            ->add('socialNumber', NumberType::class, [
+                'attr' => [
+                    'class' => 'rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm',
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer votre numéro de sécurité sociale.',
+                    ]),
+                ],
+                'label' => 'Numéro de sécurité sociale',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

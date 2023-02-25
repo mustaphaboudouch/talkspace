@@ -1,14 +1,38 @@
-<section>
-    <h3 class="text-xl font-bold">
-        Informations personnelles
-    </h3>
+<section class="mt-8">
+    <div class="flex gap-4">
+        <h3 class="items-center whitespace-nowrap text-xl font-bold">
+            Informations personnelles
+        </h3>
+        <span class="mt-4 w-full flex-1 bg-gray-300" style="height: 1px;">
 
-    <img src="{{ asset('uploads/profile/' ~ user.profilePicture) }}"
-        width="100"
-        height="100" />
+        </span>
+    </div>
 
     {{ form_start(profilePersonalForm) }}
-    {{ form_widget(profilePersonalForm) }}
-    <button type="submit">Enregistrer</button>
+    <div class="mt-8 flex items-center gap-4">
+        <img src="{{ asset('uploads/profile/' ~ user.profilePicture) }}"
+            class="h-20 w-20 rounded-full object-cover" />
+        {{ form_row(profilePersonalForm.profilePicture) }}
+    </div>
+    <div class="mt-4 flex flex-col gap-2">
+        <div class="flex flex-col gap-2 md:flex-row">
+            <div class="flex-1">
+                {{ form_row(profilePersonalForm.firstname) }}
+            </div>
+            <div class="flex-1">
+                {{ form_row(profilePersonalForm.lastname) }}
+            </div>
+        </div>
+        <div>
+            {{ form_row(profilePersonalForm.phoneNumber) }}
+        </div>
+        <div>
+            {{ form_row(profilePersonalForm.socialNumber) }}
+        </div>
+    </div>
+    <button type="submit"
+        class="mt-4 rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+        Enregistrer
+    </button>
     {{ form_end(profilePersonalForm) }}
 </section>
