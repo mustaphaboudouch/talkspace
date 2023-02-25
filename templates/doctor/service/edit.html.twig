@@ -5,12 +5,22 @@
 {% endblock %}
 
 {% block body %}
-    <h1 class="text-2xl font-bold">
+    <h1 class="text-3xl font-bold">
         Modifier la service
     </h1>
 
     {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button>Enregistrer</button>
+    <div class="mt-8 flex flex-col gap-2">
+        <div>
+            {{ form_row(form.name) }}
+        </div>
+        <div>
+            {{ form_row(form.duration) }}
+        </div>
+    </div>
+    <button type="submit"
+        class="mt-4 rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+        Enregistrer
+    </button>
     {{ form_end(form) }}
 {% endblock %}

@@ -28,24 +28,6 @@ class SupportController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/support/{id}/edit', name: 'app_admin_support_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Contact $contact, ContactRepository $contactRepository): Response
-    {
-        $form = $this->createForm(ContactFormType::class, $contact);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $contactRepository->save($contact, true);
-
-            return $this->redirectToRoute('app_admin_support_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('admin/support/edit.html.twig', [
-            'contact' => $contact,
-            'form' => $form,
-        ]);
-    }
-
     #[Route('/admin/support/{id}', name: 'app_admin_support_delete', methods: ['POST'])]
     public function delete(Request $request, Contact $contact, ContactRepository $contactRepository): Response
     {

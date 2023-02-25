@@ -1,20 +1,46 @@
-<section>
-    <h3 class="text-xl font-bold">
-        Calendrier
-    </h3>
+<section class="mt-8">
+    <div class="flex gap-4">
+        <h3 class="items-center whitespace-nowrap text-xl font-bold">
+            Calendrier
+        </h3>
+        <span class="mt-4 w-full flex-1 bg-gray-300" style="height: 1px;">
 
-    {% for schedule in schedules %}
-        <div>
-            <p>
-                {{ schedule.day }}
-            </p>
-            <ul>
+        </span>
+    </div>
+
+    {{ form_start(periodForm) }}
+    <div class="mt-8 flex flex-col items-stretch gap-2 md:flex-row md:items-end">
+        <div class="flex-1">
+            {{ form_row(periodForm.schedule) }}
+        </div>
+        <div class="flex-1">
+            {{ form_row(periodForm.startTime) }}
+        </div>
+        <div class="flex-1">
+            {{ form_row(periodForm.endTime) }}
+        </div>
+        <button type="submit"
+            class="mt-2 rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:mt-0">
+            Ajouter
+        </button>
+    </div>
+    {{ form_end(periodForm) }}
+
+    <div class="mt-8 flex flex-col gap-2">
+        {% for schedule in schedules %}
+            <div class="border border-gray-300 bg-white">
+                <h4 class="bg-gray-100 py-2 px-4 text-sm uppercase text-gray-500">
+                    {{ schedule.day }}
+                </h4>
                 {% for period in schedule.getPeriods() %}
-                    <li>
-                        <div>
-                            {{ period.startTime|date('H:i') }} - {{
-                                period.endTime|date('H:i')
-                            }}
+                    <div class="flex items-center justify-between border-t border-gray-300 py-2 px-4">
+                        <div class="text-sm">
+                            <span>
+                                De <b>{{ period.startTime|date('H:i') }}</b>
+                            </span>
+                            <span>
+                                À <b>{{ period.endTime|date('H:i') }}</b>
+                            </span>
                         </div>
                         <form method="POST"
                             action="{{
@@ -33,18 +59,17 @@
                                     'delete' ~ period.id
                                 )
                                 }}" />
-                            <button>Supprimer</button>
+                            <button class="rounded-md border border-transparent bg-red-600 py-1 px-3 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                Supprimer
+                            </button>
                         </form>
-                    </li>
+                    </div>
                 {% else %}
-                    <li>Pas de periods</li>
+                    <div class="border-t border-gray-300 py-3 px-4 text-sm text-gray-500">
+                        Vide
+                    </div>
                 {% endfor %}
-            </ul>
-        </div>
-    {% endfor %}
-
-    {{ form_start(periodForm) }}
-    {{ form_widget(periodForm) }}
-    <button type="submit">Ajouter</button>
-    {{ form_end(periodForm) }}
+            </div>
+        {% endfor %}
+    </div>
 </section>

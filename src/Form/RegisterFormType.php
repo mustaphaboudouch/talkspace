@@ -108,7 +108,6 @@ class RegisterFormType extends AbstractType
                 'mapped' => false,
                 'attr' => [
                     'class' => 'h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500',
-                    'style' => 'position: relative;top: -1px;',
                 ],
                 'constraints' => [
                     new IsTrue([

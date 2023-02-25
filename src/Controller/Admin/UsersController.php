@@ -6,9 +6,11 @@ use App\Entity\User;
 use App\Form\UserFormType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class UsersController extends AbstractController
 {
@@ -20,21 +22,35 @@ class UsersController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/users/{id}', name: 'app_admin_users_show', methods: ['GET'])]
-    public function show(User $user): Response
-    {
-        return $this->render('admin/users/show.html.twig', [
-            'user' => $user,
-        ]);
-    }
-
     #[Route('/admin/users/{id}/edit', name: 'app_admin_users_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, UserRepository $userRepository): Response
-    {
+    public function edit(
+        Request $request,
+        User $user,
+        UserRepository $userRepository,
+        SluggerInterface $slugger
+    ): Response {
         $form = $this->createForm(UserFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $profilePictureFile = $form->get('profilePicture')->getData();
+            if ($profilePictureFile) {
+                // generate new unique filename
+                $originalFilename = pathinfo($profilePictureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $profilePictureFile->guessExtension();
+                // move the file to `profile_pictures_directory` directory
+                try {
+                    $profilePictureFile->move(
+                        $this->getParameter('profile_pictures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('error', 'Erreur lors du téléchargement de la photo de profil..');
+                }
+                $user->setProfilePicture($newFilename);
+            }
+
             $userRepository->save($user, true);
 
             return $this->redirectToRoute('app_admin_users_index', [], Response::HTTP_SEE_OTHER);

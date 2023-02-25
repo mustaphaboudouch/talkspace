@@ -2,6 +2,7 @@
 
 namespace App\Controller\Public;
 
+use App\Form\ContactFormType;
 use App\Repository\ContactRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

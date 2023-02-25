@@ -16,6 +16,9 @@ class SettingsAccountFormType extends AbstractType
     {
         $builder
             ->add('experience', TextType::class, [
+                'attr' => [
+                    'class' => 'rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm',
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez entrer vos années d\'éxpérience.',
@@ -24,6 +27,9 @@ class SettingsAccountFormType extends AbstractType
                 'label' => 'Expérience',
             ])
             ->add('description', TextareaType::class, [
+                'attr' => [
+                    'class' => 'block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm',
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez entrer une petite description sur vous.',

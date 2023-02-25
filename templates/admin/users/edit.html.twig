@@ -5,12 +5,46 @@
 {% endblock %}
 
 {% block body %}
+    {{ form_start(form) }}
     <h1 class="text-2xl font-bold">
         Modifier l'utilisateur
     </h1>
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button>Modifier</button>
+    <div class="flex flex-col gap-2">
+        <div class="mt-8 flex items-center gap-4">
+            <img src="{{ asset('uploads/profile/' ~ user.profilePicture) }}"
+                class="h-20 w-20 rounded-full object-cover" />
+            {{ form_row(form.profilePicture) }}
+        </div>
+        <label class="mt-4 flex items-center gap-2">
+            {{ form_row(form.isActive) }}
+            <span>Activé l'utilisateur</span>
+        </label>
+        <div class="mt-4 flex flex-col items-center gap-2 md:flex-row">
+            <div class="flex-1">
+                {{ form_row(form.firstname) }}
+            </div>
+            <div class="flex-1">
+                {{ form_row(form.lastname) }}
+            </div>
+        </div>
+        <div>
+            {{ form_row(form.email) }}
+        </div>
+        <div>
+            {{ form_row(form.phoneNumber) }}
+        </div>
+        <div>
+            {{ form_row(form.socialNumber) }}
+        </div>
+        <div>
+            {{ form_row(form.roles) }}
+        </div>
+    </div>
+    {# {{ form_widget(form) }} #}
+    <button type="submit"
+        class="mt-4 rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+        Enregistrer
+    </button>
     {{ form_end(form) }}
 {% endblock %}
