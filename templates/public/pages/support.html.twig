@@ -5,29 +5,50 @@
 {% endblock %}
 
 {% block body %}
-    <h1 class="text-2xl font-bold">
-        Centre d'aide
-    </h1>
+    <main class="prose mx-auto py-16">
+        <h1 class="text-3xl font-bold">
+            Centre d'aide
+        </h1>
 
-    <h3 class="text-xl font-bold">
-        Questions fréquentes
-    </h3>
+        <h2>
+            Questions fréquentes
+        </h2>
 
-    <ul>
-        <li class="font-bold">Question #1 exemple</li>
-        <li>Reponse #1 exemple</li>
-        <li class="font-bold">Question #2 exemple</li>
-        <li>Reponse #2 exemple</li>
-        <li class="font-bold">Question #3 exemple</li>
-        <li>Reponse #3 exemple</li>
-    </ul>
+        <ul>
+            <li class="font-bold">Question #1 exemple</li>
+            <li>Reponse #1 exemple</li>
+            <li class="font-bold">Question #2 exemple</li>
+            <li>Reponse #2 exemple</li>
+            <li class="font-bold">Question #3 exemple</li>
+            <li>Reponse #3 exemple</li>
+        </ul>
 
-    <h3 class="text-xl font-bold">
-        Vous souhaitez nous contacter ?
-    </h3>
+        <h2>
+            Vous souhaitez nous contacter ?
+        </h2>
 
-    {{ form_start(contactForm) }}
-    {{ form_widget(contactForm) }}
-    <button type="submit">Envoyer</button>
-    {{ form_end(contactForm) }}
+        {{ form_start(contactForm) }}
+        <div class="flex flex-col gap-2">
+            <div class="flex flex-col items-center gap-2 md:flex-row">
+                <div class="flex-1">
+                    {{ form_row(contactForm.firstname) }}
+                </div>
+                <div class="flex-1">
+                    {{ form_row(contactForm.lastname) }}
+                </div>
+            </div>
+            <div>
+                {{ form_row(contactForm.email) }}
+            </div>
+            <div>
+                {{ form_row(contactForm.message) }}
+            </div>
+        </div>
+        {# {{ form_widget(contactForm) }} #}
+        <button type="submit"
+            class="mt-4 rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Envoyer
+        </button>
+        {{ form_end(contactForm) }}
+    </main>
 {% endblock %}

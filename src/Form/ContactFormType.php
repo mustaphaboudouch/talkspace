@@ -19,6 +19,7 @@ class ContactFormType extends AbstractType
             ->add('firstname', TextType::class, [
                 'attr' => [
                     'autocomplete' => 'given-name',
+                    'class' => 'appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm',
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -30,6 +31,7 @@ class ContactFormType extends AbstractType
             ->add('lastname', TextType::class, [
                 'attr' => [
                     'autocomplete' => 'family-name',
+                    'class' => 'appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm',
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -41,6 +43,7 @@ class ContactFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'attr' => [
                     'autocomplete' => 'email',
+                    'class' => 'appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm',
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -50,6 +53,9 @@ class ContactFormType extends AbstractType
                 'label' => 'Adresse e-mail',
             ])
             ->add('message', TextareaType::class, [
+                'attr' => [
+                    'class' => 'appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm',
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez entrer votre message.',
