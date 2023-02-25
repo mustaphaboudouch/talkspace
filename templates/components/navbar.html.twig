@@ -1,28 +1,44 @@
-<nav class="border-b border-gray-200 bg-white">
+<nav class="border-b border-gray-300 bg-white">
     <div class="mx-auto flex w-11/12 max-w-[1400px] items-center justify-between py-4">
-        <div>
-            <a href="{{ path('app_home') }}" class="text-xl font-bold">
-                <span class="text-indigo-600">Talk</span>Space.
-            </a>
+        <a href="{{ path('app_home') }}" class="text-xl font-bold">
+            <span class="text-indigo-600">Talk</span>Space.
+        </a>
+        <div class="flex items-center">
             {% if app.user %}
-                <a href="{{ path('app_dashboard') }}">Dashboard</a>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('app_admin_users_index') }}">
-                        Utilisateurs
+                {% if is_granted('ROLE_PATIENT') %}
+                    <a href="{{ path('app_doctor_index') }}"
+                        class="mr-8 flex items-center gap-2 text-sm text-indigo-600">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="h-5 w-5">
+                            <path stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                        </svg>
+                        <span class="hover:underline">
+                            Trouver un thérapeute
+                        </span>
                     </a>
-                    <a href="{{ path('app_admin_support_index') }}">Messages</a>
                 {% endif %}
-                {% if is_granted('ROLE_DOCTOR') %}
-                    <a href="{{ path('app_doctor_service_index') }}">
-                        Services
-                    </a>
-                    <a href="{{ path('app_doctor_settings') }}">Paramètres</a>
-                {% endif %}
-                <a href="{{ path('app_profile') }}">Profil</a>
-                <a href="{{ path('app_logout') }}">Déconnecter</a>
+            {% else %}
+                <a href="{{ path('app_doctor_index') }}"
+                    class="mr-8 flex items-center gap-2 text-sm text-indigo-600">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="h-5 w-5">
+                        <path stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                    <span class="hover:underline">Trouver un thérapeute</span>
+                </a>
             {% endif %}
-        </div>
-        <div>
             {% if app.user %}
                 <div class="flex items-center gap-3">
                     <img src="{{
