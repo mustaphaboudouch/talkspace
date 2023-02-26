@@ -111,4 +111,10 @@ class AppointmentController extends AbstractController
 
         return $this->redirectToRoute('app_appointment_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/appointment/files/{id}/download', name: 'app_appointment_file_download', methods: ['GET'])]
+    public function downloadFile(File $file): Response
+    {
+        return $this->file($_SERVER['DOCUMENT_ROOT'] . '/uploads/files/' . $file->getUrl());
+    }
 }
