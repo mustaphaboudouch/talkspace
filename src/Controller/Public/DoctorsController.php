@@ -33,6 +33,8 @@ class DoctorsController extends AbstractController
     #[Route('/doctors/{id}', name: 'app_doctor_show', methods: ['GET'])]
     public function show(User $user): Response
     {
+        $this->denyAccessUnlessGranted('IS_DOCTOR', $user);
+
         $daysOff = $user->getDaysOff();
         $appointments = $user->getDoctorAppointments();
 
@@ -109,6 +111,7 @@ class DoctorsController extends AbstractController
         AppointmentRepository $appointmentRepository
     ): Response {
         $loggedUser = $this->getUser();
+        $this->denyAccessUnlessGranted('IS_DOCTOR', $user);
         $this->denyAccessUnlessGranted('USER_ACTIVE', $loggedUser);
 
         $daysOff = $user->getDaysOff();

@@ -17,8 +17,16 @@ class UsersController extends AbstractController
     #[Route('/admin/users', name: 'app_admin_users_index')]
     public function index(UserRepository $userRepository): Response
     {
+        $users = $userRepository->findAll();
+        $filteredUsers = [];
+        foreach ($users as $user) {
+            if ($user->getRole() !== 'ROLE_ADMIN') {
+                $filteredUsers[] = $user;
+            }
+        }
+
         return $this->render('admin/users/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $filteredUsers,
         ]);
     }
 
