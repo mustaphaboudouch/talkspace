@@ -5,20 +5,16 @@
 {% endblock %}
 
 {% block body %}
-    <div class="overflow-hidden bg-gray-100 py-24 sm:py-32">
+    <div class="overflow-hidden border-b border-gray-300 bg-gray-100 py-24 sm:py-32">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="flex flex-col items-center">
                 <a href="{{ path('app_home') }}"
                     class="mb-8 text-4xl font-bold">
                     <span class="text-indigo-600">Talk</span>Space.
                 </a>
-                <p>
-                    There are many variations of passages of Lorem Ipsum
-                    available, but the majority have suffered alteration in some
-                    form, by injected humour, or randomised words which don't
-                    look even slightly believable. If you are going to use a
-                    passage of Lorem Ipsum, you need to be sure there isn't
-                    anything embarrassing hidden in the middle of text.
+                <p class="max-w-xl text-center text-2xl font-light">
+                    Priorisez votre santé mentale - Réservez une séance avec un
+                    thérapeute dès maintenant.
                 </p>
                 <a href="{{ path('app_doctor_index') }}"
                     class="mt-8 flex items-center gap-3 rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-lg text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -27,7 +23,7 @@
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        class="h-6 w-6">
+                        class="h-5 w-5">
                         <path stroke-linecap="round"
                             stroke-linejoin="round"
                             d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -112,9 +108,9 @@
                         </dl>
                     </div>
                 </div>
-                <img src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png"
-                    alt="Product screenshot"
-                    class="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
+                <img src="{{ asset('images/banner.png') }}"
+                    alt="Doctors"
+                    class="w-[48rem] max-w-none sm:w-[57rem] md:-ml-4 lg:-ml-0"
                     width="2432"
                     height="1442" />
             </div>

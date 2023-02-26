@@ -4,6 +4,7 @@ namespace App\Controller\Auth;
 
 use App\Entity\Account;
 use App\Entity\Schedule;
+use App\Entity\Service;
 use App\Entity\User;
 use App\Form\RegisterFormType;
 use App\Security\EmailVerifier;
@@ -96,6 +97,16 @@ class RegisterController extends AbstractController
                     $entityManager->persist($schedule);
                     $entityManager->flush();
                 }
+            }
+
+            // add doctor 'consultation' service
+            if ($user->getRole() === 'ROLE_DOCTOR') {
+                $service = new Service();
+                $service->setName('Consultation');
+                $service->setDoctor($user);
+
+                $entityManager->persist($service);
+                $entityManager->flush();
             }
 
             // send verification email
