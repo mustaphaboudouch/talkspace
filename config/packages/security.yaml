@@ -34,28 +34,10 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # public routes (auth)
-        # - { path: ^/register, roles: PUBLIC_ACCESS }
-        # - { path: ^/login, roles: PUBLIC_ACCESS }
-        # - { path: ^/forgot-password, roles: PUBLIC_ACCESS }
-        # - { path: ^/reset-password, roles: PUBLIC_ACCESS }
-        # - { path: ^/check-email, roles: PUBLIC_ACCESS }
-
-        # public routes
-        # - { path: ^/, roles: PUBLIC_ACCESS }
-        # - { path: ^/about, roles: PUBLIC_ACCESS }
-        # - { path: ^/support, roles: PUBLIC_ACCESS }
-        # - { path: ^/privacy-policy, roles: PUBLIC_ACCESS }
-        # - { path: ^/terms-of-service, roles: PUBLIC_ACCESS }
-        # - { path: ^/doctors, roles: PUBLIC_ACCESS }
-
-        # private routes
         - { path: ^/dashboard, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/profile, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/doctor/settings, roles: ROLE_DOCTOR }
-        - { path: ^/doctor/services, roles: ROLE_DOCTOR }
-        # - { path: ^/admin/users, roles: ROLE_ADMIN }
-        # - { path: ^/admin/support, roles: ROLE_ADMIN }
+        - { path: ^/doctor/, roles: ROLE_DOCTOR }
+        - { path: ^/admin, roles: ROLE_ADMIN }
 
 when@test:
     security:
