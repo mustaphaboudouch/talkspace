@@ -17,24 +17,21 @@ class DashboardController extends AbstractController
         ServiceRepository $serviceRepository,
         AppointmentRepository $appointmentRepository
     ): Response {
-        $doctors = [];
-        $patients = [];
+        $users = [];
         $services = [];
         $appointments = [];
 
         $user = $this->getUser();
 
         if ($user->getRole() === 'ROLE_ADMIN') {
-            $doctors = $userRepository->findAll();
-            $patients = $userRepository->findAll();
+            $users = $userRepository->findAll();
             $services = $serviceRepository->findAll();
             $appointments = $appointmentRepository->findAll();
         }
 
         if ($user->getRole() === 'ROLE_DOCTOR') {
-            $patients = $userRepository->findAll();
             $services = $user->getServices();
-            $appointments = $user->getAppointments();
+            $appointments = $user->getDoctorAppointments();
         }
 
         if ($user->getRole() === 'ROLE_PATIENT') {
@@ -42,8 +39,8 @@ class DashboardController extends AbstractController
         }
 
         return $this->render('dashboard/index.html.twig', [
-            'doctorsCount' => count($doctors),
-            'patientsCount' => count($patients),
+            'usersCount' => count($users),
+            'patientsCount' => count($users),
             'servicesCount' => count($services),
             'appointmentsCount' => count($appointments),
         ]);

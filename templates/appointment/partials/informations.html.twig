@@ -28,6 +28,24 @@
                     {{ appointment.patient.lastname }}
                 </td>
             </tr>
+            <tr class="border-t border-gray-300">
+                <th class="p-4 text-left text-sm font-normal uppercase text-gray-500">
+                    Date
+                </th>
+                <td>
+                    {{ appointment.date|date('d-m-Y') }}
+                </td>
+            </tr>
+            <tr class="border-t border-gray-300">
+                <th class="p-4 text-left text-sm font-normal uppercase text-gray-500">
+                    Heure
+                </th>
+                <td>
+                    De <b>{{ appointment.startTime|date('H:i') }}</b> à <b>{{
+                            appointment.endTime|date('H:i')
+                        }}</b>
+                </td>
+            </tr>
         </tbody>
     </table>
 </section>

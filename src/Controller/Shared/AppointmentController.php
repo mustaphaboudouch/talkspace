@@ -5,7 +5,6 @@ namespace App\Controller\Shared;
 use App\Entity\Appointment;
 use App\Entity\File;
 use App\Form\AppointmentFileFormType;
-use App\Form\AppointmentFormType;
 use App\Repository\AppointmentRepository;
 use App\Repository\FileRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,30 +16,25 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppointmentController extends AbstractController
 {
-    #[Route('/appointment', name: 'app_appointment_index', methods: ['GET', 'POST'])]
-    public function index(Request $request, AppointmentRepository $appointmentRepository): Response
+    #[Route('/appointment', name: 'app_appointment_index', methods: ['GET'])]
+    public function index(AppointmentRepository $appointmentRepository): Response
     {
         $user = $this->getUser();
 
-        $appointment = new Appointment();
-        $appointmentForm = $this->createForm(AppointmentFormType::class);
-        $appointmentForm->handleRequest($request);
+        $appointments = [];
 
-        if ($appointmentForm->isSubmitted() && $appointmentForm->isValid()) {
-            $appointment = $appointmentForm->getData();
-
-            $appointment->setPatient($user);
-            $appointment->setDoctor($user);
-
-            $appointmentRepository->save($appointment, true);
-
-            $this->addFlash('success', 'Rendez-vous ajouté avec succès.');
-            return $this->redirectToRoute('app_appointment_index');
+        if ($user->getRole() === 'ROLE_ADMIN') {
+            $appointments = $appointmentRepository->findAll();
+        }
+        if ($user->getRole() === 'ROLE_DOCTOR') {
+            $appointments = $user->getDoctorAppointments();
+        }
+        if ($user->getRole() === 'ROLE_PATIENT') {
+            $appointments = $user->getAppointments();
         }
 
         return $this->renderForm('appointment/index.html.twig', [
-            'appointments' => $user->getAppointments(),
-            'appointmentForm' => $appointmentForm,
+            'appointments' => $appointments,
         ]);
     }
 

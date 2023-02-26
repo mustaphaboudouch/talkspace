@@ -8,67 +8,34 @@
         </span>
     </div>
 
-    {{ form_start(periodForm) }}
+    {{ form_start(scheduleForm) }}
     <div class="mt-8 flex flex-col items-stretch gap-2 md:flex-row md:items-end">
         <div class="flex-1">
-            {{ form_row(periodForm.schedule) }}
+            {{ form_row(scheduleForm.schedule) }}
         </div>
         <div class="flex-1">
-            {{ form_row(periodForm.startTime) }}
+            {{ form_row(scheduleForm.startTime) }}
         </div>
         <div class="flex-1">
-            {{ form_row(periodForm.endTime) }}
+            {{ form_row(scheduleForm.endTime) }}
         </div>
         <button type="submit"
             class="mt-2 rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:mt-0">
             Ajouter
         </button>
     </div>
-    {{ form_end(periodForm) }}
+    {{ form_end(scheduleForm) }}
 
     <div class="mt-8 flex flex-col gap-2">
         {% for schedule in schedules %}
-            <div class="border border-gray-300 bg-white">
-                <h4 class="bg-gray-100 py-2 px-4 text-sm uppercase text-gray-500">
+            <div class="flex items-center justify-between border border-gray-300 bg-white px-4 py-3">
+                <h4 class="text-sm uppercase text-gray-500">
                     {{ schedule.day }}
                 </h4>
-                {% for period in schedule.getPeriods() %}
-                    <div class="flex items-center justify-between border-t border-gray-300 py-2 px-4">
-                        <div class="text-sm">
-                            <span>
-                                De <b>{{ period.startTime|date('H:i') }}</b>
-                            </span>
-                            <span>
-                                À <b>{{ period.endTime|date('H:i') }}</b>
-                            </span>
-                        </div>
-                        <form method="POST"
-                            action="{{
-                            path(
-                                'app_doctor_settings_period_delete',
-                                {
-                                    id: period.id
-                                }
-                            )
-                            }}"
-                            onsubmit="return confirm('Are you sure you want to delete this item?');">
-                            <input type="hidden"
-                                name="_token"
-                                value="{{
-                                csrf_token(
-                                    'delete' ~ period.id
-                                )
-                                }}" />
-                            <button class="rounded-md border border-transparent bg-red-600 py-1 px-3 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-                                Supprimer
-                            </button>
-                        </form>
-                    </div>
-                {% else %}
-                    <div class="border-t border-gray-300 py-3 px-4 text-sm text-gray-500">
-                        Vide
-                    </div>
-                {% endfor %}
+                <div class="text-sm">
+                    <span>De <b>{{ schedule.startTime|date('H:i') }}</b></span>
+                    <span>À <b>{{ schedule.endTime|date('H:i') }}</b></span>
+                </div>
             </div>
         {% endfor %}
     </div>

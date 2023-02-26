@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Form\RegisterFormType;
 use App\Security\EmailVerifier;
 use App\Security\LoginAuthenticator;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -59,8 +60,10 @@ class RegisterController extends AbstractController
             if ($user->getRole() === 'ROLE_DOCTOR') {
                 // add doctor account
                 $account = new Account();
-                $account->setDescription(null);
-                $account->setExperience(null);
+                $account->setDescription($user->getFirstname() . " " . $user->getLastname() . ", psychothérapeute diplômé, est un professionnel compatissant et dévoué avec 3 années d'expérience dans l'aide aux individus et aux familles à surmonter une variété de défis émotionnels et comportementaux. [Il/Elle] a obtenu son diplôme de Maîtrise en travail social de l'université Exemple et est autorisé à pratiquer la psychothérapie dans Paris.");
+                $account->setExperience("Plus de 3 années d'expérience");
+                $account->setDuration(15);
+                $account->setCleanup(5);
 
                 $entityManager->persist($account);
                 $entityManager->flush();
@@ -86,6 +89,8 @@ class RegisterController extends AbstractController
                 foreach ($days as $day) {
                     $schedule = new Schedule();
                     $schedule->setDay($day);
+                    $schedule->setStartTime(new DateTime('09:00'));
+                    $schedule->setEndTime(new DateTime('16:00'));
                     $schedule->setDoctor($user);
 
                     $entityManager->persist($schedule);

@@ -3,8 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ScheduleRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ScheduleRepository::class)]
@@ -22,12 +21,14 @@ class Schedule
     #[ORM\JoinColumn(nullable: false)]
     private ?User $doctor = null;
 
-    #[ORM\OneToMany(mappedBy: 'schedule', targetEntity: Period::class)]
-    private Collection $periods;
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $startTime = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $endTime = null;
 
     public function __construct()
     {
-        $this->periods = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -47,6 +48,30 @@ class Schedule
         return $this;
     }
 
+    public function getStartTime(): ?\DateTimeInterface
+    {
+        return $this->startTime;
+    }
+
+    public function setStartTime(\DateTimeInterface $startTime): self
+    {
+        $this->startTime = $startTime;
+
+        return $this;
+    }
+
+    public function getEndTime(): ?\DateTimeInterface
+    {
+        return $this->endTime;
+    }
+
+    public function setEndTime(\DateTimeInterface $endTime): self
+    {
+        $this->endTime = $endTime;
+
+        return $this;
+    }
+
     public function getDoctor(): ?User
     {
         return $this->doctor;
@@ -55,36 +80,6 @@ class Schedule
     public function setDoctor(?User $doctor): self
     {
         $this->doctor = $doctor;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Period>
-     */
-    public function getPeriods(): Collection
-    {
-        return $this->periods;
-    }
-
-    public function addPeriod(Period $period): self
-    {
-        if (!$this->periods->contains($period)) {
-            $this->periods->add($period);
-            $period->setSchedule($this);
-        }
-
-        return $this;
-    }
-
-    public function removePeriod(Period $period): self
-    {
-        if ($this->periods->removeElement($period)) {
-            // set the owning side to null (unless already changed)
-            if ($period->getSchedule() === $this) {
-                $period->setSchedule(null);
-            }
-        }
 
         return $this;
     }

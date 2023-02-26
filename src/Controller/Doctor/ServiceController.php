@@ -47,6 +47,9 @@ class ServiceController extends AbstractController
     #[Route('/doctor/services/{id}/edit', name: 'app_doctor_service_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Service $service, ServiceRepository $serviceRepository): Response
     {
+        $user = $this->getUser();
+        $this->denyAccessUnlessGranted('USER_ACTIVE', $user);
+
         $form = $this->createForm(ServiceFormType::class, $service);
         $form->handleRequest($request);
 
@@ -65,6 +68,9 @@ class ServiceController extends AbstractController
     #[Route('/doctor/services/{id}', name: 'app_doctor_service_delete', methods: ['POST'])]
     public function delete(Request $request, Service $service, ServiceRepository $serviceRepository): Response
     {
+        $user = $this->getUser();
+        $this->denyAccessUnlessGranted('USER_ACTIVE', $user);
+
         if ($this->isCsrfTokenValid('delete' . $service->getId(), $request->request->get('_token'))) {
             $serviceRepository->remove($service, true);
         }

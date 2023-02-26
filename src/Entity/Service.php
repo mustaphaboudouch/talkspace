@@ -18,9 +18,6 @@ class Service
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column]
-    private ?int $duration = null;
-
     #[ORM\ManyToOne(inversedBy: 'services')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $doctor = null;
@@ -46,18 +43,6 @@ class Service
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getDuration(): ?int
-    {
-        return $this->duration;
-    }
-
-    public function setDuration(int $duration): self
-    {
-        $this->duration = $duration;
 
         return $this;
     }

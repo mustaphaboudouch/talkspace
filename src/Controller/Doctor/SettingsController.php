@@ -3,13 +3,12 @@
 namespace App\Controller\Doctor;
 
 use App\Entity\DayOff;
-use App\Entity\Period;
 use App\Form\DayOffFormType;
-use App\Form\PeriodFormType;
+use App\Form\ScheduleFormType;
 use App\Form\SettingsAccountFormType;
 use App\Repository\AccountRepository;
 use App\Repository\DayOffRepository;
-use App\Repository\PeriodRepository;
+use App\Repository\ScheduleRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +23,7 @@ class SettingsController extends AbstractController
         AccountRepository $accountRepository,
         DayOffRepository $dayOffRepository,
         UserRepository $userRepository,
-        PeriodRepository $periodRepository,
+        ScheduleRepository $scheduleRepository,
     ): Response {
         $user = $this->getUser();
 
@@ -33,8 +32,8 @@ class SettingsController extends AbstractController
         $accountForm->handleRequest($request);
 
         $schedules = $user->getSchedules();
-        $periodForm = $this->createForm(PeriodFormType::class);
-        $periodForm->handleRequest($request);
+        $scheduleForm = $this->createForm(ScheduleFormType::class);
+        $scheduleForm->handleRequest($request);
 
         $daysOff = $user->getDaysOff();
         $dayOffForm = $this->createForm(DayOffFormType::class);
@@ -45,23 +44,27 @@ class SettingsController extends AbstractController
             $account = $accountForm->getData();
             $accountRepository->save($account, true);
 
-            $this->addFlash('success', 'Votre informations ont bien été modifiées.');
+            $this->addFlash('success', 'Vos informations ont bien été modifiées.');
             return $this->redirectToRoute('app_doctor_settings');
         }
 
         // schedule form
-        if ($periodForm->isSubmitted() && $periodForm->isValid()) {
+        if ($scheduleForm->isSubmitted() && $scheduleForm->isValid()) {
             $selectedSchedule = null;
             foreach ($user->getSchedules() as $schedule) {
-                if ($schedule->getDay() === $periodForm->get('schedule')->getData()) {
+                if ($schedule->getDay() === $scheduleForm->get('schedule')->getData()) {
                     $selectedSchedule = $schedule;
                     break;
                 }
             }
 
-            $period = $periodForm->getData();
-            $period->setSchedule($selectedSchedule);
-            $periodRepository->save($period, true);
+            $schedule = $scheduleForm->getData();
+            $schedule->setDay($selectedSchedule->getDay());
+            $schedule->setDoctor($user);
+            $scheduleRepository->save($schedule, true);
+
+            // remove existing one
+            $scheduleRepository->remove($selectedSchedule, true);
 
             $this->addFlash('success', 'Votre calendrier a été mis à jour avec succès.');
             return $this->redirectToRoute('app_doctor_settings');
@@ -84,7 +87,7 @@ class SettingsController extends AbstractController
             'schedules' => $schedules,
             'daysOff' => $daysOff,
             'accountForm' => $accountForm->createView(),
-            'periodForm' => $periodForm->createView(),
+            'scheduleForm' => $scheduleForm->createView(),
             'dayOffForm' => $dayOffForm->createView(),
         ]);
     }
@@ -94,16 +97,6 @@ class SettingsController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete' . $dayOff->getId(), $request->request->get('_token'))) {
             $dayOffRepository->remove($dayOff, true);
-        }
-
-        return $this->redirectToRoute('app_doctor_settings', [], Response::HTTP_SEE_OTHER);
-    }
-
-    #[Route('/doctor/settings/period/{id}', name: 'app_doctor_settings_period_delete', methods: ['POST'])]
-    public function deletePeriod(Request $request, Period $period, PeriodRepository $periodRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $period->getId(), $request->request->get('_token'))) {
-            $periodRepository->remove($period, true);
         }
 
         return $this->redirectToRoute('app_doctor_settings', [], Response::HTTP_SEE_OTHER);
