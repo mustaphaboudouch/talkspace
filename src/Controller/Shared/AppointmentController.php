@@ -45,6 +45,8 @@ class AppointmentController extends AbstractController
         FileRepository $fileRepository,
         SluggerInterface $slugger
     ): Response {
+        $this->denyAccessUnlessGranted('APPOINTMENT_EDIT', $appointment);
+
         $user = $this->getUser();
 
         $appointmentFile = new File();
@@ -92,6 +94,8 @@ class AppointmentController extends AbstractController
         Appointment $appointment,
         AppointmentRepository $appointmentRepository
     ): Response {
+        $this->denyAccessUnlessGranted('APPOINTMENT_EDIT', $appointment);
+
         if ($this->isCsrfTokenValid('delete' . $appointment->getId(), $request->request->get('_token'))) {
             $appointmentRepository->remove($appointment, true);
         }

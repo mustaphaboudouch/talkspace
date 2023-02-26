@@ -95,6 +95,8 @@ class SettingsController extends AbstractController
     #[Route('/doctor/settings/day-off/{id}', name: 'app_doctor_settings_dayoff_delete', methods: ['POST'])]
     public function deleteDayOff(Request $request, DayOff $dayOff, DayOffRepository $dayOffRepository): Response
     {
+        $this->denyAccessUnlessGranted('DAY_OFF_EDIT', $dayOff);
+
         if ($this->isCsrfTokenValid('delete' . $dayOff->getId(), $request->request->get('_token'))) {
             $dayOffRepository->remove($dayOff, true);
         }
